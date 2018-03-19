@@ -66,6 +66,7 @@ should be printed after the position and orientation.
   LLFFFLFLFL
 
 - Sample Output
+
   1 1 E
   
   3 3 N LOST
