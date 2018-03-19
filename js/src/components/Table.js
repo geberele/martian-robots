@@ -1,5 +1,3 @@
-import React from 'react'
-
 const TableRow = ({row}) => (
   <tr>
     {row.map((column , i) => (

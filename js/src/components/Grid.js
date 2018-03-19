@@ -31,10 +31,10 @@ class Grid extends React.Component {
   handleSubmit (e) {
     e.preventDefault()
     try {
-      var result = this.refs.theInput.value.split(/\r?\n/),
-        sizeGrid = result[0].split('').filter((e) => (e.trim().length > 0)),
+      var result = this.refs.theInput.value.split(/\r?\n/).filter((e) => (e.trim().length > 0)),
+        sizeGrid = result[0].split(' ').filter((e) => (e.trim().length > 0)),
         coordinatesRobotStart, coordinatesRobotProgress, instructions,
-        robots = [], lost, line, i
+        robots = [], lost, line, i, scent
 
       for (line = 1; line < result.length; line += 2) {
         coordinatesRobotStart = result[line].split('').filter((e) => (e.trim().length > 0))
@@ -52,12 +52,16 @@ class Grid extends React.Component {
           if (instructions[i] == 'F') {
             var obj = this.moveRobot(coordinatesRobotProgress, sizeGrid[0], sizeGrid[1])
             coordinatesRobotProgress = obj.coordinates
-            //lost = (obj.lost && this.checkScent(robots, coordinatesRobotProgress[coordinatesRobotProgress.length - 1]))
             lost = obj.lost
             if (lost) break
           } else if (instructions[i] == 'R' || instructions[i] == 'L') {
             coordinatesRobotProgress = this.changeOrientation(instructions[i], coordinatesRobotProgress)
           }
+        }
+
+        if (robots.length > 0 && lost) {
+          scent = this.checkScent(robots, coordinatesRobotProgress[coordinatesRobotProgress.length - 1])
+          if (scent) lost = false
         }
 
         robots.push({
@@ -174,7 +178,7 @@ class Grid extends React.Component {
         lastElement[2]
       ]
     }
-    else if (lastElement[2] == 'S' && (parseInt(lastElement[1]) - 1) > -1) {
+    else if (lastElement[2] == 'E' && (parseInt(lastElement[1]) - 1) > -1) {
       newElement = [
         lastElement[0],
         parseInt(lastElement[1]) - 1,
@@ -199,11 +203,15 @@ class Grid extends React.Component {
    * @returns {boolean}
    */
   checkScent(robots, lastCoordinatesRobot) {
-    robots.forEach((robot) => {
-      let lastStep = robot.coordinates[robot.coordinates.length - 1]
-      if (!robot.lost && JSON.stringify(lastStep) == JSON.stringify(lastCoordinatesRobot)) return true
-    })
-    return false
+    var i, scent = false
+    for (i = 0; i < robots.length; i++) {
+      let lastStep = robots[i].coordinates[robots[i].coordinates.length - 1]
+      if (JSON.stringify(lastStep) == JSON.stringify(lastCoordinatesRobot)) {
+        scent = true
+        break
+      }
+    }
+    return scent
   }
 
   /**
@@ -233,9 +241,17 @@ class Grid extends React.Component {
       <div>
         <h1>Martian Robots</h1>
         <form>
-          <textarea ref="theInput"></textarea>
+          <textarea ref="theInput" rows="20" cols="50"></textarea>
           <button type="submit" onClick={this.handleSubmit}>Start</button>
         </form>
+        <div>
+          <b>Example Input:</b><br />
+          5 5<br />
+          4 4 S<br />FRLFFFFFFFF<br />
+          1 1 W<br />FLFFFRFFF<br />
+          1 1 W<br />FLFFFRFFF<br />
+          4 4 S<br />FRFFFFFFFF<br />
+        </div>
         {error}
         <br />
         {results}
