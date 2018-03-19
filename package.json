@@ -1,8 +1,7 @@
 {
   "name": "martian-robots",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The Martian Robots Problem",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify js/src/App.js -o js/dist/martian-robots.js --debug -t [ babelify --presets [ env react ] ]"
