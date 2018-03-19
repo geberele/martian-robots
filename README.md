@@ -26,7 +26,7 @@ the last grid position the robot occupied before disappearing over the edge. An 
 move “off” the world from a grid point from which a robot has been previously lost is simply
 ignored by the current robot.
 
-##The Input
+## The Input
 The first line of input is the upper-right coordinates of the rectangular world, the lower-left
 coordinates are assumed to be 0, 0.
 
