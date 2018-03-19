@@ -1,6 +1,6 @@
-#Martian Robots
+# Martian Robots
 
-##The Problem
+## The Problem
 The surface of Mars can be modelled by a rectangular grid around which robots are able to
 move according to instructions provided from Earth. You are to write a program that
 determines each sequence of robot positions and reports the final position of the robot.
@@ -42,13 +42,13 @@ The maximum value for any coordinate is 50.
 
 All instruction strings will be less than 100 characters in length.
 
-##The Output
+## The Output
 For each robot position/instruction in the input, the output should indicate the final grid
 position and orientation of the robot. If a robot falls off the edge of the grid the word “LOST”
 should be printed after the position and orientation.
 
 
-###Samples
+### Samples
 - Sample Input
 
   5 3
@@ -72,5 +72,5 @@ should be printed after the position and orientation.
   
   2 3 S
 
-###Demo
+### Demo
 https://geberele.github.io/martian-robots
